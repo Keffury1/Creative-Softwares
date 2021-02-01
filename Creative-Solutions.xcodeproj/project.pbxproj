@@ -13,6 +13,7 @@
 		372B17D325C87CB100B87C50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 372B17D225C87CB100B87C50 /* Assets.xcassets */; };
 		372B17D625C87CB100B87C50 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 372B17D525C87CB100B87C50 /* Preview Assets.xcassets */; };
 		372B17D925C87CB100B87C50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 372B17D725C87CB100B87C50 /* LaunchScreen.storyboard */; };
+		372B17EC25C88A8D00B87C50 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 372B17EB25C88A8D00B87C50 /* fonts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		372B17D525C87CB100B87C50 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		372B17D825C87CB100B87C50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		372B17DA25C87CB100B87C50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		372B17EB25C88A8D00B87C50 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +58,9 @@
 		372B17CB25C87CB000B87C50 /* Creative-Solutions */ = {
 			isa = PBXGroup;
 			children = (
-				372B17CC25C87CB000B87C50 /* AppDelegate.swift */,
-				372B17CE25C87CB000B87C50 /* SceneDelegate.swift */,
-				372B17D025C87CB000B87C50 /* ContentView.swift */,
-				372B17D225C87CB100B87C50 /* Assets.xcassets */,
-				372B17D725C87CB100B87C50 /* LaunchScreen.storyboard */,
-				372B17DA25C87CB100B87C50 /* Info.plist */,
+				372B17E525C87CD900B87C50 /* App Lifecycle */,
+				372B17E425C87CD600B87C50 /* Views */,
+				372B17E325C87CD400B87C50 /* Resources */,
 				372B17D425C87CB100B87C50 /* Preview Content */,
 			);
 			path = "Creative-Solutions";
@@ -73,6 +72,34 @@
 				372B17D525C87CB100B87C50 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		372B17E325C87CD400B87C50 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				372B17D725C87CB100B87C50 /* LaunchScreen.storyboard */,
+				372B17DA25C87CB100B87C50 /* Info.plist */,
+				372B17D225C87CB100B87C50 /* Assets.xcassets */,
+				372B17EB25C88A8D00B87C50 /* fonts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		372B17E425C87CD600B87C50 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				372B17D025C87CB000B87C50 /* ContentView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		372B17E525C87CD900B87C50 /* App Lifecycle */ = {
+			isa = PBXGroup;
+			children = (
+				372B17CC25C87CB000B87C50 /* AppDelegate.swift */,
+				372B17CE25C87CB000B87C50 /* SceneDelegate.swift */,
+			);
+			name = "App Lifecycle";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +162,7 @@
 				372B17D925C87CB100B87C50 /* LaunchScreen.storyboard in Resources */,
 				372B17D625C87CB100B87C50 /* Preview Assets.xcassets in Resources */,
 				372B17D325C87CB100B87C50 /* Assets.xcassets in Resources */,
+				372B17EC25C88A8D00B87C50 /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

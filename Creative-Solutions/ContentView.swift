@@ -9,13 +9,48 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack {
+            VStack(alignment: .center, spacing: 10, content: {
+                Text("Projects")
+                    .font(.custom("Poppins-Black.ttf", size: 24))
+                    .bold()
+                    .frame(width: 101, height: 125, alignment: .center)
+                AddView()
+            })
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+            .background(Color.init("OffWhite"))
+            .edgesIgnoringSafeArea(.all)
+        }
+    }
+}
+
+struct AddView: View {
+    var body: some View {
+        Button(action: {
+            
+        }, label: {
+            Image(systemName: "plus")
+                .frame(width: 60, height: 60, alignment: .center)
+                .background(
+                    ZStack{
+                        Circle()
+                            .fill(Color.init("ButtonBlue"))
+                            .shadow(color: Color.init("ButtonBlue").opacity(0.2), radius: 5, x: 0, y: 0)
+                    })
+        }).accentColor(.white)
+        .frame(width: 343, height: 163, alignment: .center)
+        .background(Color.white)
+        .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
+            )
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+        }
     }
 }
