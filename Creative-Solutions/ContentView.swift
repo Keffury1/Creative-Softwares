@@ -11,6 +11,7 @@ import CoreData
 struct ContentView: View {
     
     @State var GoToDetailView: Bool = false
+    @State var project: Project?
     
     @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(
@@ -23,7 +24,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if GoToDetailView {
-                DetailView()
+                DetailView(project: $project)
             } else {
                 VStack(alignment: .center, spacing: 10, content: {
                     Text("Projects")
@@ -57,6 +58,7 @@ struct ContentView: View {
                         }).frame(width: 343, height: 163, alignment: .center)
                         .background(Color.white)
                         .onTapGesture {
+                            self.project = project
                             GoToDetailView.toggle()
                         }
                         .cornerRadius(10)
@@ -98,7 +100,7 @@ struct DetailView: View {
     @State private var inputImage: UIImage?
     @State private var image: Image?
     
-    @State var project: Project?
+    @Binding var project: Project?
     @Environment(\.managedObjectContext) var managedObjectContext
     
     var body: some View {
@@ -236,7 +238,10 @@ struct DetailView: View {
             Spacer()
             Button(action: {
                 if project != nil {
-                    
+                    project!.title = title
+                    project!.descript = description
+                    project!.image = inputImage
+                    project!.color = UIColor(colorChoice?.color ?? .white)
                 } else {
                     project = Project(context: self.managedObjectContext)
                     project?.title = title
