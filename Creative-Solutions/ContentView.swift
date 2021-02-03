@@ -24,12 +24,9 @@ struct ContentView: View {
                     }, label: {
                         Image(systemName: "plus")
                             .frame(width: 60, height: 60, alignment: .center)
-                            .background(
-                                ZStack{
-                                    Circle()
-                                        .fill(Color.init("ButtonBlue"))
-                                        .shadow(color: Color.init("ButtonBlue").opacity(0.2), radius: 5, x: 0, y: 0)
-                                })
+                            .background(Color.init("ButtonBlue"))
+                            .shadow(color: Color.init("ButtonBlue").opacity(0.2), radius: 5, x: 0, y: 0)
+                            .clipShape(Circle())
                     }).accentColor(.white)
                     .frame(width: 343, height: 163, alignment: .center)
                     .background(Color.white)
@@ -54,6 +51,23 @@ struct DetailView: View {
                 .bold()
                 .frame(width: 180, height: 125, alignment: .center)
             HeaderView()
+            Spacer()
+            Button(action: {
+                
+            }, label: {
+                HStack(alignment: .center, spacing: nil, content: {
+                    Image(systemName: "calendar")
+                    Text("Add date & time")
+                        .font(.custom("Avenir", size: 14))
+                        .fontWeight(.heavy)
+                }).accentColor(Color.init("TextOrange"))
+                .frame(width: 343, height: 43, alignment: .center)
+                .background(Color.white)
+                .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
+                    )
+            })
         })
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .background(Color.init("OffWhite"))
@@ -91,6 +105,7 @@ struct HeaderView: View {
     
     @State private var colorChoice: ColorChoice?
     @State private var colorWasChosen: Bool = false
+    @State private var selectedButton: Int?
     
     var body: some View {
         VStack(alignment: .center, spacing: 5, content: {
@@ -108,76 +123,70 @@ struct HeaderView: View {
             Spacer()
             HStack(alignment: .center, spacing: 20, content: {
                 Button(action: {
-                    self.colorChoice = .one()
+                    colorChoice = .one()
                     colorWasChosen = true
+                    selectedButton = 1
                 }, label: {
-                    Image("")
+                    Image(systemName: selectedButton == 1 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("1"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("1"))
+                        .clipShape(Circle())
                 })
                 Button(action: {
                     self.colorChoice = .two()
                     colorWasChosen = true
+                    selectedButton = 2
                 }, label: {
-                    Text("")
+                    Image(systemName: selectedButton == 2 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("2"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("2"))
+                        .clipShape(Circle())
                 })
                 Button(action: {
                     self.colorChoice = .three()
                     colorWasChosen = true
+                    selectedButton = 3
                 }, label: {
-                    Text("")
+                    Image(systemName: selectedButton == 3 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("3"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("3"))
+                        .clipShape(Circle())
                 })
                 Button(action: {
                     self.colorChoice = .four()
                     colorWasChosen = true
+                    selectedButton = 4
                 }, label: {
-                    Text("")
+                    Image(systemName: selectedButton == 4 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("4"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("4"))
+                        .clipShape(Circle())
                 })
                 Button(action: {
                     self.colorChoice = .five()
                     colorWasChosen = true
+                    selectedButton = 5
                 }, label: {
-                    Text("")
+                    Image(systemName: selectedButton == 5 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("5"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("5"))
+                        .clipShape(Circle())
                 })
                 Button(action: {
                     self.colorChoice = .six()
                     colorWasChosen = true
+                    selectedButton = 6
                 }, label: {
-                    Text("")
+                    Image(systemName: selectedButton == 6 ? "checkmark" : "")
                         .frame(width: 30, height: 30, alignment: .center)
-                        .background(
-                            ZStack{
-                                Circle()
-                                    .fill(Color.init("6"))
-                            })
+                        .accentColor(.white)
+                        .background(Color.init("6"))
+                        .clipShape(Circle())
                 })
             })
             Spacer()
