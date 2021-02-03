@@ -45,8 +45,13 @@ struct ContentView: View {
                             HStack(alignment: .center, spacing: 0, content: {
                                 padding()
                                 Text(project.title!)
+                                    .font(.custom("Avenir", size: 14))
+                                    .fontWeight(.medium)
                                 Spacer()
                                 Text(project.date!)
+                                    .font(.custom("Avenir", size: 14))
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(Color.init("TextOrange"))
                                 padding()
                             })
                         }).frame(width: 343, height: 163, alignment: .center)
