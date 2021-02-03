@@ -44,6 +44,7 @@ struct ContentView: View {
 }
 
 struct DetailView: View {
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20, content: {
             Text("Create Project")
@@ -52,7 +53,7 @@ struct DetailView: View {
                 .frame(width: 180, height: 125, alignment: .center)
             HeaderView()
             Button(action: {
-                
+                // Add Date Picker
             }, label: {
                 HStack(alignment: .center, spacing: nil, content: {
                     Image(systemName: "calendar")
@@ -69,7 +70,7 @@ struct DetailView: View {
             EntryView()
             Spacer()
             Button(action: {
-                
+                // Save Project
             }, label: {
                 Text("Save")
                     .font(.custom("Poppins-Black.ttf", size: 16))
@@ -120,11 +121,15 @@ struct HeaderView: View {
     @State private var colorWasChosen: Bool = false
     @State private var selectedButton: Int?
     
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var image: Image?
+    
     var body: some View {
         VStack(alignment: .center, spacing: 5, content: {
             Spacer()
             Button(action: {
-                
+                self.showingImagePicker = true
             }, label: {
                 Image(systemName: "square.and.arrow.up")
                     .accentColor(colorWasChosen ? Color.white : Color.gray)
@@ -210,7 +215,16 @@ struct HeaderView: View {
         .overlay(
             RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
             )
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(image: self.$inputImage)
+        }
     }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
+    }
+
 }
 
 struct EntryView: View {
