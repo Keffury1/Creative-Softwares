@@ -45,13 +45,12 @@ struct ContentView: View {
 
 struct DetailView: View {
     var body: some View {
-        VStack(alignment: .center, spacing: 10, content: {
+        VStack(alignment: .center, spacing: 20, content: {
             Text("Create Project")
                 .font(.custom("Poppins-Black.ttf", size: 24))
                 .bold()
                 .frame(width: 180, height: 125, alignment: .center)
             HeaderView()
-            Spacer()
             Button(action: {
                 
             }, label: {
@@ -63,11 +62,25 @@ struct DetailView: View {
                 }).accentColor(Color.init("TextOrange"))
                 .frame(width: 343, height: 43, alignment: .center)
                 .background(Color.white)
-                .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
                     )
             })
+            EntryView()
+            Spacer()
+            Button(action: {
+                
+            }, label: {
+                Text("Save")
+                    .font(.custom("Poppins-Black.ttf", size: 16))
+                    .fontWeight(.semibold)
+            }).accentColor(.white)
+            .frame(width: 300, height: 43, alignment: .center)
+            .background(Color.init("ButtonBlue"))
+            .cornerRadius(10)
+            .shadow(color: Color.init("ButtonBlue").opacity(0.5), radius: 10, x: 0, y: 5)
+            .padding()
+            .padding()
         })
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .background(Color.init("OffWhite"))
@@ -197,6 +210,33 @@ struct HeaderView: View {
         .overlay(
             RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
             )
+    }
+}
+
+struct EntryView: View {
+    @State private var title: String = ""
+    @State private var description: String = ""
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5, content: {
+            Text("Title")
+                .font(.custom("Avenir", size: 16))
+                .fontWeight(.heavy)
+            TextField("Type here", text: $title)
+                .background(Color.white)
+                .frame(width: 343, height: 38, alignment: .center)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+        })
+        VStack(alignment: .leading, spacing: 5, content: {
+            Text("Description")
+                .font(.custom("Avenir", size: 16))
+                .fontWeight(.heavy)
+            TextEditor(text: $description)
+                .frame(width: 343, height: 57, alignment: .center)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
+                    )
+        })
     }
 }
 
