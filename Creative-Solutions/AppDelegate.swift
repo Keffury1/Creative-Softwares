@@ -12,7 +12,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CoreDataModelNameHere")
+        let container = NSPersistentContainer(name: "CreativeSoftwares")
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Error loading persistent stores: \(error)")

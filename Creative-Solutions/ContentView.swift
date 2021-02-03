@@ -38,10 +38,11 @@ struct ContentView: View {
                                     .frame(width: 343, height: 117, alignment: .center)
                                     .cornerRadius(10)
                             } else {
-                                Image("")
-                                    .background(Color.init(project.color as! UIColor))
-                                    .frame(width: 343, height: 117, alignment: .center)
-                                    .cornerRadius(10)
+                                VStack(alignment: .center, spacing: nil, content: {
+                                    Text("")
+                                }).background(self.getColour(data: project.color!))
+                                .frame(width: 343, height: 117, alignment: .center)
+                                .cornerRadius(10)
                             }
                             HStack(alignment: .center, spacing: 0, content: {
                                 padding()
@@ -84,6 +85,16 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             }
         }
+    }
+    
+    func getColour(data: Data) -> Color {
+        do {
+            return try Color(NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data)!)
+        } catch {
+            print(error)
+        }
+
+        return Color.clear
     }
 }
 

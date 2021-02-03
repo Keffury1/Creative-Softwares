@@ -70,12 +70,18 @@ struct DetailView: View {
                     DatePicker("", selection: $selectedDate)
                         .datePickerStyle(GraphicalDatePickerStyle())
                         .frame(width: 300, height: 300, alignment: .center)
+                        .accentColor(Color.init("ButtonBlue"))
+                    Spacer()
                     Button(action: {
                         showingDatePicker.toggle()
                     }, label: {
-                        Text("Save Date")
-                    })
-                }
+                        Text("Save")
+                    }).accentColor(.white)
+                    .frame(width: 300, height: 40, alignment: .center)
+                    .background(Color.init("ButtonBlue"))
+                    .cornerRadius(10)
+                    .shadow(color: Color.init("ButtonBlue").opacity(0.5), radius: 10, x: 0, y: 5)
+                }.frame(width: 300, height: 360, alignment: .center)
             } else {
                 VStack(alignment: .center, spacing: 20, content: {
                     Text("Create Project")
@@ -101,7 +107,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 1
                             }, label: {
-                                Image(systemName: selectedButton == 1 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 1 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("1"))
@@ -112,7 +118,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 2
                             }, label: {
-                                Image(systemName: selectedButton == 2 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 2 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("2"))
@@ -123,7 +129,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 3
                             }, label: {
-                                Image(systemName: selectedButton == 3 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 3 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("3"))
@@ -134,7 +140,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 4
                             }, label: {
-                                Image(systemName: selectedButton == 4 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 4 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("4"))
@@ -145,7 +151,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 5
                             }, label: {
-                                Image(systemName: selectedButton == 5 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 5 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("5"))
@@ -156,7 +162,7 @@ struct DetailView: View {
                                 colorWasChosen = true
                                 selectedButton = 6
                             }, label: {
-                                Image(systemName: selectedButton == 6 ? "checkmark" : "")
+                                Image(systemName: selectedButton == 6 ? "checkmark" : "poweroff")
                                     .frame(width: 30, height: 30, alignment: .center)
                                     .accentColor(.white)
                                     .background(Color.init("6"))
@@ -212,14 +218,22 @@ struct DetailView: View {
                             project?.title = title
                             project?.descript = description
                             project?.image = inputImage?.jpegData(compressionQuality: 1.0)
-                            project?.color = UIColor(colorChoice?.color ?? .white)
+                            do {
+                                try project?.color = NSKeyedArchiver.archivedData(withRootObject: UIColor(colorChoice?.color ?? .white), requiringSecureCoding: false)
+                            } catch {
+                                print(error)
+                            }
                             project?.date = dateFormatter.string(from: selectedDate)
                         } else {
                             project = Project(context: self.managedObjectContext)
                             project?.title = title
                             project?.descript = description
                             project?.image = inputImage?.jpegData(compressionQuality: 1.0)
-                            project?.color = UIColor(colorChoice?.color ?? .white)
+                            do {
+                                try project?.color = NSKeyedArchiver.archivedData(withRootObject: UIColor(colorChoice?.color ?? .white), requiringSecureCoding: false)
+                            } catch {
+                                print(error)
+                            }
                             project?.date = dateFormatter.string(from: selectedDate)
                         }
                         do {
