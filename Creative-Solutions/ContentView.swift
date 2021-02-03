@@ -11,8 +11,8 @@ import CoreData
 struct ContentView: View {
     
     @State var GoToDetailView: Bool = false
-    @Environment(\.managedObjectContext) var managedObjectContext
     
+    @Environment(\.managedObjectContext) var managedObjectContext
     @FetchRequest(
         entity: Project.entity(),
         sortDescriptors: [
@@ -30,6 +30,32 @@ struct ContentView: View {
                         .font(.custom("Poppins-Black.ttf", size: 24))
                         .bold()
                         .frame(width: 101, height: 125, alignment: .center)
+                    ForEach(projects) { project in
+                        VStack(alignment: .center, spacing: 10, content: {
+                            if project.image != nil {
+                                Image(uiImage: project.image as! UIImage)
+                                    .frame(width: 343, height: 117, alignment: .center)
+                                    .cornerRadius(10)
+                            } else {
+                                Image("")
+                                    .background(Color.init(project.color as! UIColor))
+                                    .frame(width: 343, height: 117, alignment: .center)
+                                    .cornerRadius(10)
+                            }
+                            HStack(alignment: .center, spacing: 0, content: {
+                                padding()
+                                Text(project.title!)
+                                Spacer()
+                                Text(project.date!)
+                                padding()
+                            })
+                        }).frame(width: 343, height: 163, alignment: .center)
+                        .background(Color.white)
+                        .onTapGesture {
+                            GoToDetailView.toggle()
+                        }
+                        .cornerRadius(10)
+                    }
                     Button(action: {
                         self.GoToDetailView.toggle()
                     }, label: {
@@ -56,13 +82,118 @@ struct ContentView: View {
 
 struct DetailView: View {
     
+    @State private var title: String = ""
+    @State private var description: String = ""
+    
+    @State private var colorChoice: ColorChoice?
+    @State private var colorWasChosen: Bool = false
+    @State private var selectedButton: Int?
+    
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var image: Image?
+    
+    @State var project: Project?
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
     var body: some View {
         VStack(alignment: .center, spacing: 20, content: {
             Text("Create Project")
                 .font(.custom("Poppins-Black.ttf", size: 24))
                 .bold()
                 .frame(width: 180, height: 125, alignment: .center)
-            HeaderView()
+            VStack(alignment: .center, spacing: 5, content: {
+                Spacer()
+                Button(action: {
+                    self.showingImagePicker = true
+                }, label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .accentColor(colorWasChosen ? Color.white : Color.gray)
+                })
+                Text("Upload header image or choose color")
+                    .foregroundColor(colorWasChosen ? Color.white : Color.gray)
+                    .font(.custom("Avenir", size: 12))
+                    .fontWeight(.medium)
+                Spacer()
+                HStack(alignment: .center, spacing: 20, content: {
+                    Button(action: {
+                        colorChoice = .one()
+                        colorWasChosen = true
+                        selectedButton = 1
+                    }, label: {
+                        Image(systemName: selectedButton == 1 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("1"))
+                            .clipShape(Circle())
+                    })
+                    Button(action: {
+                        self.colorChoice = .two()
+                        colorWasChosen = true
+                        selectedButton = 2
+                    }, label: {
+                        Image(systemName: selectedButton == 2 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("2"))
+                            .clipShape(Circle())
+                    })
+                    Button(action: {
+                        self.colorChoice = .three()
+                        colorWasChosen = true
+                        selectedButton = 3
+                    }, label: {
+                        Image(systemName: selectedButton == 3 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("3"))
+                            .clipShape(Circle())
+                    })
+                    Button(action: {
+                        self.colorChoice = .four()
+                        colorWasChosen = true
+                        selectedButton = 4
+                    }, label: {
+                        Image(systemName: selectedButton == 4 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("4"))
+                            .clipShape(Circle())
+                    })
+                    Button(action: {
+                        self.colorChoice = .five()
+                        colorWasChosen = true
+                        selectedButton = 5
+                    }, label: {
+                        Image(systemName: selectedButton == 5 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("5"))
+                            .clipShape(Circle())
+                    })
+                    Button(action: {
+                        self.colorChoice = .six()
+                        colorWasChosen = true
+                        selectedButton = 6
+                    }, label: {
+                        Image(systemName: selectedButton == 6 ? "checkmark" : "")
+                            .frame(width: 30, height: 30, alignment: .center)
+                            .accentColor(.white)
+                            .background(Color.init("6"))
+                            .clipShape(Circle())
+                    })
+                })
+                Spacer()
+            })
+            .frame(width: 343, height: 163, alignment: .center)
+            .background(colorChoice?.color ?? .white)
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
+                )
+            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                ImagePicker(image: self.$inputImage)
+            }
             Button(action: {
                 // Add Date Picker
             }, label: {
@@ -78,10 +209,41 @@ struct DetailView: View {
                     RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
                     )
             })
-            EntryView()
+            VStack(alignment: .leading, spacing: 5, content: {
+                Text("Title")
+                    .font(.custom("Avenir", size: 16))
+                    .fontWeight(.heavy)
+                TextField("Type here", text: $title)
+                    .background(Color.white)
+                    .frame(width: 343, height: 38, alignment: .center)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            })
+            VStack(alignment: .leading, spacing: 5, content: {
+                Text("Description")
+                    .font(.custom("Avenir", size: 16))
+                    .fontWeight(.heavy)
+                TextEditor(text: $description)
+                    .frame(width: 343, height: 57, alignment: .center)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
+                        )
+            })
             Spacer()
             Button(action: {
-                // Save Project
+                if project != nil {
+                    
+                } else {
+                    project = Project(context: self.managedObjectContext)
+                    project?.title = title
+                    project?.descript = description
+                    project?.image = inputImage
+                    project?.color = UIColor(colorChoice?.color ?? .white)
+                }
+                do {
+                    try self.managedObjectContext.save()
+                } catch {
+                   print("Error saving to moc: \(error)")
+                }
             }, label: {
                 Text("Save")
                     .font(.custom("Poppins-Black.ttf", size: 16))
@@ -97,6 +259,11 @@ struct DetailView: View {
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .background(Color.init("OffWhite"))
         .edgesIgnoringSafeArea(.all)
+    }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        image = Image(uiImage: inputImage)
     }
 }
 
@@ -123,145 +290,6 @@ enum ColorChoice {
         case .six(let color):
             return color
         }
-    }
-}
-
-struct HeaderView: View {
-    
-    @State private var colorChoice: ColorChoice?
-    @State private var colorWasChosen: Bool = false
-    @State private var selectedButton: Int?
-    
-    @State private var showingImagePicker = false
-    @State private var inputImage: UIImage?
-    @State private var image: Image?
-    
-    var body: some View {
-        VStack(alignment: .center, spacing: 5, content: {
-            Spacer()
-            Button(action: {
-                self.showingImagePicker = true
-            }, label: {
-                Image(systemName: "square.and.arrow.up")
-                    .accentColor(colorWasChosen ? Color.white : Color.gray)
-            })
-            Text("Upload header image or choose color")
-                .foregroundColor(colorWasChosen ? Color.white : Color.gray)
-                .font(.custom("Avenir", size: 12))
-                .fontWeight(.medium)
-            Spacer()
-            HStack(alignment: .center, spacing: 20, content: {
-                Button(action: {
-                    colorChoice = .one()
-                    colorWasChosen = true
-                    selectedButton = 1
-                }, label: {
-                    Image(systemName: selectedButton == 1 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("1"))
-                        .clipShape(Circle())
-                })
-                Button(action: {
-                    self.colorChoice = .two()
-                    colorWasChosen = true
-                    selectedButton = 2
-                }, label: {
-                    Image(systemName: selectedButton == 2 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("2"))
-                        .clipShape(Circle())
-                })
-                Button(action: {
-                    self.colorChoice = .three()
-                    colorWasChosen = true
-                    selectedButton = 3
-                }, label: {
-                    Image(systemName: selectedButton == 3 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("3"))
-                        .clipShape(Circle())
-                })
-                Button(action: {
-                    self.colorChoice = .four()
-                    colorWasChosen = true
-                    selectedButton = 4
-                }, label: {
-                    Image(systemName: selectedButton == 4 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("4"))
-                        .clipShape(Circle())
-                })
-                Button(action: {
-                    self.colorChoice = .five()
-                    colorWasChosen = true
-                    selectedButton = 5
-                }, label: {
-                    Image(systemName: selectedButton == 5 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("5"))
-                        .clipShape(Circle())
-                })
-                Button(action: {
-                    self.colorChoice = .six()
-                    colorWasChosen = true
-                    selectedButton = 6
-                }, label: {
-                    Image(systemName: selectedButton == 6 ? "checkmark" : "")
-                        .frame(width: 30, height: 30, alignment: .center)
-                        .accentColor(.white)
-                        .background(Color.init("6"))
-                        .clipShape(Circle())
-                })
-            })
-            Spacer()
-        })
-        .frame(width: 343, height: 163, alignment: .center)
-        .background(colorChoice?.color ?? .white)
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
-            )
-        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-            ImagePicker(image: self.$inputImage)
-        }
-    }
-    
-    func loadImage() {
-        guard let inputImage = inputImage else { return }
-        image = Image(uiImage: inputImage)
-    }
-
-}
-
-struct EntryView: View {
-    @State private var title: String = ""
-    @State private var description: String = ""
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5, content: {
-            Text("Title")
-                .font(.custom("Avenir", size: 16))
-                .fontWeight(.heavy)
-            TextField("Type here", text: $title)
-                .background(Color.white)
-                .frame(width: 343, height: 38, alignment: .center)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-        })
-        VStack(alignment: .leading, spacing: 5, content: {
-            Text("Description")
-                .font(.custom("Avenir", size: 16))
-                .fontWeight(.heavy)
-            TextEditor(text: $description)
-                .frame(width: 343, height: 57, alignment: .center)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
-                    )
-        })
     }
 }
 
