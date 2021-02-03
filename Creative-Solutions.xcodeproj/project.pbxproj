@@ -16,6 +16,7 @@
 		372B17EC25C88A8D00B87C50 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 372B17EB25C88A8D00B87C50 /* fonts */; };
 		375D75A625CAED530016E441 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375D75A525CAED530016E441 /* ImagePicker.swift */; };
 		375D75AB25CAF2EC0016E441 /* CreativeSoftwares.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 375D75A925CAF2EC0016E441 /* CreativeSoftwares.xcdatamodeld */; };
+		37EFF74325CB0D5A001C7E45 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EFF74225CB0D5A001C7E45 /* DetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		372B17EB25C88A8D00B87C50 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		375D75A525CAED530016E441 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		375D75AA25CAF2EC0016E441 /* CreativeSoftwares.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CreativeSoftwares.xcdatamodel; sourceTree = "<group>"; };
+		37EFF74225CB0D5A001C7E45 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				372B17D025C87CB000B87C50 /* ContentView.swift */,
+				37EFF74225CB0D5A001C7E45 /* DetailView.swift */,
 				375D75A525CAED530016E441 /* ImagePicker.swift */,
 			);
 			name = Views;
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				372B17CD25C87CB000B87C50 /* AppDelegate.swift in Sources */,
+				37EFF74325CB0D5A001C7E45 /* DetailView.swift in Sources */,
 				375D75A625CAED530016E441 /* ImagePicker.swift in Sources */,
 				372B17CF25C87CB000B87C50 /* SceneDelegate.swift in Sources */,
 				375D75AB25CAF2EC0016E441 /* CreativeSoftwares.xcdatamodeld in Sources */,
