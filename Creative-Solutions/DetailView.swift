@@ -175,7 +175,7 @@ struct DetailView: View {
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
-                        )
+                    )
                     Button(action: {
                         showingDatePicker.toggle()
                     }, label: {
@@ -189,7 +189,7 @@ struct DetailView: View {
                         .background(Color.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
-                            )
+                        )
                     })
                     VStack(alignment: .leading, spacing: 5, content: {
                         Text("Title")
@@ -210,7 +210,7 @@ struct DetailView: View {
                             .font(.custom("Avenir", size: 14))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
-                                )
+                            )
                     }).frame(width: 363, height: 84, alignment: .leading)
                     Spacer()
                     Button(action: {
@@ -236,12 +236,12 @@ struct DetailView: View {
                             }
                             project?.date = dateFormatter.string(from: selectedDate)
                         }
+                        saved.toggle()
                         do {
                             try self.managedObjectContext.save()
                         } catch {
-                           print("Error saving to moc: \(error)")
+                            print("Error saving to moc: \(error)")
                         }
-                        saved.toggle()
                     }, label: {
                         Text("Save")
                             .font(.custom("Poppins-Black.ttf", size: 16))
