@@ -6,9 +6,20 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
+    
     @State var GoToDetailView: Bool = false
+    @Environment(\.managedObjectContext) var managedObjectContext
+    
+    @FetchRequest(
+        entity: Project.entity(),
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \Project.date, ascending: true)
+        ]
+    ) var projects: FetchedResults<Project>
+    
     var body: some View {
         ZStack {
             if GoToDetailView {
