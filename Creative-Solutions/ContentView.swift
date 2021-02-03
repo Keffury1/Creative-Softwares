@@ -34,7 +34,7 @@ struct ContentView: View {
                     ForEach(projects) { project in
                         VStack(alignment: .center, spacing: 10, content: {
                             if project.image != nil {
-                                Image(uiImage: project.image as! UIImage)
+                                Image(uiImage: UIImage(data: project.image!)!)
                                     .frame(width: 343, height: 117, alignment: .center)
                                     .cornerRadius(10)
                             } else {
@@ -191,16 +191,12 @@ struct DetailView: View {
                     })
                 })
                 Spacer()
-            })
-            .frame(width: 343, height: 163, alignment: .center)
+            }).frame(width: 343, height: 163, alignment: .center)
             .background(colorChoice?.color ?? .white)
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
                 )
-            .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-                ImagePicker(image: self.$inputImage)
-            }
             Button(action: {
                 // Add Date Picker
             }, label: {
@@ -224,7 +220,7 @@ struct DetailView: View {
                     .background(Color.white)
                     .frame(width: 343, height: 38, alignment: .center)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-            })
+            }).frame(width: 363, height: 67, alignment: .leading)
             VStack(alignment: .leading, spacing: 5, content: {
                 Text("Description")
                     .font(.custom("Avenir", size: 16))
@@ -234,19 +230,19 @@ struct DetailView: View {
                     .overlay(
                         RoundedRectangle(cornerRadius: 10).stroke(Color(.lightGray), lineWidth: 0.5)
                         )
-            })
+            }).frame(width: 363, height: 84, alignment: .leading)
             Spacer()
             Button(action: {
                 if project != nil {
                     project!.title = title
                     project!.descript = description
-                    project!.image = inputImage
+                    project!.image = inputImage?.jpegData(compressionQuality: 1.0)
                     project!.color = UIColor(colorChoice?.color ?? .white)
                 } else {
                     project = Project(context: self.managedObjectContext)
                     project?.title = title
                     project?.descript = description
-                    project?.image = inputImage
+                    project?.image = inputImage?.jpegData(compressionQuality: 1.0)
                     project?.color = UIColor(colorChoice?.color ?? .white)
                 }
                 do {
@@ -265,10 +261,12 @@ struct DetailView: View {
             .shadow(color: Color.init("ButtonBlue").opacity(0.5), radius: 10, x: 0, y: 5)
             .padding()
             .padding()
-        })
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
+        }).frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .top)
         .background(Color.init("OffWhite"))
         .edgesIgnoringSafeArea(.all)
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+            ImagePicker(image: self.$inputImage)
+        }
     }
     
     func loadImage() {
